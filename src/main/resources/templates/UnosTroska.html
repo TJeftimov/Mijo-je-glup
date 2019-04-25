@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Unos troška</title>
+    <link rel="stylesheet" type="text/css" href="../stil.css">
+</head>
+<body>
+
+    <form method="POST" th:object="${expense}">
+        <p>Unesite naziv troska:</p>
+        <input type="text" th:field="*{naziv}" />
+        <span class="validation-error" th:if="${#fields.hasErrors('naziv')}"
+              th:errors="*{naziv}">error u nazivu
+        </span>
+        <p>Unesite iznos troska:</p>
+        <input type="number"  th:field="*{iznos}" />
+        <span class="validation-error" th:if="${#fields.hasErrors('iznos')}"
+              th:errors="*{iznos}">error u iznosu
+        </span>
+        <p>Unesite vrstu troska:</p>
+        <select class="dropdown" th:field="*{vrsta}" >
+            <option value="" >---Odaberite vrijednost---</option>
+            <option th:each="expenseType : ${Vrste}"
+                    th:value="${expenseType}"
+                    th:text="${expenseType}"></option>
+        </select>
+        <span class="validation-error" th:if="${#fields.hasErrors('vrsta')}"
+              th:errors="*{vrsta}">error u vrsti
+        </span>
+        <br><br>
+        <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+        <button class="button" type="submit">Dodaj trosak</button>
+
+
+    </form>
+
+    <div class="logout">
+        <form method="POST" th:action="@{/perform_logout}">
+            <span>Ulogirani ste kao <span sec:authentication="name">Korisnik</span>.
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/><br>
+            <button class="button" type="submit">Logout</button>
+        </form>
+    </div>
+
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Unos troška</title>
+    <link rel="stylesheet" type="text/css" href="../stil.css">
+</head>
+<body>
+<form method="POST" th:object="${expense}">
+    <p>Unesite naziv troska:</p>
+    <input type="text" th:field="*{naziv}" />
+    <span class="validation-error" th:if="${#fields.hasErrors('naziv')}"
+          th:errors="*{naziv}">error u nazivu
+        </span>
+    <p>Unesite iznos troska:</p>
+    <input type="number"  th:field="*{iznos}" />
+    <span class="validation-error" th:if="${#fields.hasErrors('iznos')}"
+          th:errors="*{iznos}">error u iznosu
+        </span>
+    <p>Unesite vrstu troska:</p>
+    <select class="dropdown" th:field="*{vrsta}" >
+        <option value="" >---Odaberite vrijednost---</option>
+        <option th:each="expenseType : ${Vrste}"
+                th:value="${expenseType}"
+                th:text="${expenseType}"></option>
+    </select>
+    <span class="validation-error" th:if="${#fields.hasErrors('vrsta')}"
+          th:errors="*{vrsta}">error u vrsti
+        </span>
+    <br><br>
+    <input class="button" type="submit" value="Unesi trošak">
+</form>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../stil.css">
+    <title>Ispis troška</title>
+</head>
+<body>
+<p>Unijeli ste trošak:</p>
+<p th:text="${Trosak.naziv}"></p>
+<p>Iznosa:</p>
+<p th:text="${Trosak.iznos}"></p>
+<p>Vrste:</p>
+<p th:text="${Trosak.vrsta}"></p>
+
+<br>
+<p>Trenutno stanje je:</p>
+<p th:text="${Stanje}"></p>
+
+<a th:href="@{/moneyapp}"><div class="button">Nazad</div></a>
+<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/resetirajNovcanik}"><div class="button">Resetiraj</div></a>
+
+<div class="logout">
+    <form method="POST" th:action="@{/perform_logout}">
+            <span>Ulogirani ste kao <span sec:authentication="name">Korisnik</span>.
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/><br>
+            <button class="button" type="submit">Logout</button>
+    </form>
+</div>
+
+</body>
+</html>
